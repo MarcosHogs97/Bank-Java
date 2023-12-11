@@ -52,6 +52,7 @@ public class ContaPF extends Conta {
     protected void setEmprestimo(double emprestimo) {
         this.saldoEmprestimo -= emprestimo;
     }
+
     protected void quitaEmprestimo() {
         this.saldoEmprestimo = this.limite;
     }
@@ -73,21 +74,21 @@ public class ContaPF extends Conta {
     @Override
     protected void emprestimo(double valor) {
         if (getEmprestimo() < valor) {
-            JOptionPane.showMessageDialog(null, "Voce nao possui limite suficiente para realizar o empréstimo!!\nLimite para empréstimo de R$" + String.format("%.2f",getEmprestimo()));
+            JOptionPane.showMessageDialog(null, "Voce nao possui limite suficiente para realizar o empréstimo!!\nLimite para empréstimo de R$" + String.format("%.2f", getEmprestimo()));
             return;
         }
         if (valor > 0 && valor <= getEmprestimo()) {
             setQuantidadeParcelas(validarValoresInt("Em quantas parcelas você deseja pagar o empréstimo?"));
             setValorParcelas(valor / getQuantidadeParcelas());
             setTotal(valor);
-            JOptionPane.showMessageDialog(null, "O valor total a ser pago pelo empréstimo é de R$" + String.format("%.2f",getTotal()) + "\nSera cobrado mensalmente um valor de R$" + String.format("%.2f",getTotal() / getQuantidadeParcelas()) + " Durante " + getQuantidadeParcelas() + " Meses");
+            JOptionPane.showMessageDialog(null, "O valor total a ser pago pelo empréstimo é de R$" + String.format("%.2f", getTotal()) + "\nSera cobrado mensalmente um valor de R$" + String.format("%.2f", getTotal() / getQuantidadeParcelas()) + " Durante " + getQuantidadeParcelas() + " Meses");
             int yesOrNo = JOptionPane.showConfirmDialog(null, "Deseja realizar o empréstimo?", "Empréstimo", JOptionPane.YES_NO_OPTION);
             if (yesOrNo == JOptionPane.YES_OPTION) {
                 if (getEmprestimo() - valor >= 0) {
                     setEmprestimo(valor);
                     depositar(valor);
                     JOptionPane.showMessageDialog(null, "Empréstimo realizado com sucesso!");
-                    JOptionPane.showMessageDialog(null, "Seu saldo atual é de R$" + String.format("%.2f",getSaldo()) + "\nSeu limite para empréstimo é de R$" + String.format("%.2f",getLimite()) + "\nLimite desponivel de R$ " + String.format("%.2f",getLimite() - getTotal()));
+                    JOptionPane.showMessageDialog(null, "Seu saldo atual é de R$" + String.format("%.2f", getSaldo()) + "\nSeu limite para empréstimo é de R$" + String.format("%.2f", getLimite()) + "\nLimite desponivel de R$ " + String.format("%.2f", getLimite() - getTotal()));
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Empréstimo cancelado");
@@ -98,10 +99,11 @@ public class ContaPF extends Conta {
             JOptionPane.showMessageDialog(null, "Valor inválido.");
         }
     }
-    protected void pagarEmprestimo(){
-        if(getSaldo() < getTotal()){
+
+    protected void pagarEmprestimo() {
+        if (getSaldo() < getTotal()) {
             JOptionPane.showMessageDialog(null, "Voce nao possui saldo o suficiente para pagar o empréstimo");
-        }else{
+        } else {
             sacar(getTotal());
             quitaEmprestimo();
         }

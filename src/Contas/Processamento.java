@@ -167,7 +167,8 @@ public class Processamento {
             print(contaEncontrada);
         }
     }
-    protected void processarPagamentoEmprestimo(){
+
+    protected void processarPagamentoEmprestimo() {
         String[] tiposContaEm = {"Titular da conta", "Numero de conta"};
         int escolha = JOptionPane.showOptionDialog(null, "Por favor, informe o tipo de busca que deseja fazer.", "Visualizar Conta", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, tiposContaEm, null);
         if (escolha == 0) {
@@ -229,10 +230,10 @@ public class Processamento {
         String nomeTitular = contaEncontrada.getTitular();
         String emprestimo = "";
         if (Objects.equals(tipo, "PF") || Objects.equals(tipo, "PJ")) {
-            emprestimo = "\nSeu limite de empréstimo é de R$" + String.format("%.2f",contaEncontrada.getLimite()) + "\nSeu limite disponivel é de R$" + contaEncontrada.getEmprestimo();
+            emprestimo = "\nSeu limite de empréstimo é de R$" + String.format("%.2f", contaEncontrada.getLimite()) + "\nSeu limite disponivel é de R$" + contaEncontrada.getEmprestimo();
 
         }
-        JOptionPane.showMessageDialog(null, "Titular: " + nomeTitular + "\nTipo da conta: " + tipo + "\nSaldo atual: R$" + String.format("%.2f",saldo) + "\nNumero da conta : " + numero + emprestimo);
+        JOptionPane.showMessageDialog(null, "Titular: " + nomeTitular + "\nTipo da conta: " + tipo + "\nSaldo atual: R$" + String.format("%.2f", saldo) + "\nNumero da conta : " + numero + emprestimo);
 
     }
 
@@ -260,7 +261,8 @@ public class Processamento {
         double valorEmprestimo = Double.parseDouble(JOptionPane.showInputDialog(null, "Valor:", "Empréstimo", JOptionPane.PLAIN_MESSAGE));
         conta.addEmprestimo(valorEmprestimo);
     }
-    protected void pagarEmprestimo(Conta conta){
+
+    protected void pagarEmprestimo(Conta conta) {
         conta.addpagarEmprestimo();
     }
 }

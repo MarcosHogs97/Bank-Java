@@ -51,12 +51,15 @@ public class Conta {
     protected double getEmprestimo() {
         return emprestimo;
     }
+
     protected double getTotal() {
         return total;
     }
+
     protected double getLimite() {
         return limite;
     }
+
     protected void setEmprestimo(double emprestimo) {
         this.emprestimo = emprestimo;
     }
@@ -71,7 +74,8 @@ public class Conta {
     protected void emprestimo(double valor) {
 
     }
-    protected void pagarEmprestimo(){
+
+    protected void pagarEmprestimo() {
 
     }
 
@@ -86,7 +90,8 @@ public class Conta {
     protected void addEmprestimo(double valor) {
         emprestimo(valor);
     }
-    protected void addpagarEmprestimo(){
+
+    protected void addpagarEmprestimo() {
         pagarEmprestimo();
     }
 

@@ -21,9 +21,10 @@ public class ContaPoupanca extends Conta {
         }
         JOptionPane.showMessageDialog(null, "Nao foi possível realizar o saque tente novamente mais tarde!");
     }
+
     @Override
     protected void emprestimo(double valor) {
-        JOptionPane.showMessageDialog(null,"Infelizmente nao é possível realizar empréstimo em conta do tipo poupança");
+        JOptionPane.showMessageDialog(null, "Infelizmente nao é possível realizar empréstimo em conta do tipo poupança");
     }
 
 }
