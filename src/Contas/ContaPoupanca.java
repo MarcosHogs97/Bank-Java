@@ -15,11 +15,7 @@ public class ContaPoupanca extends Conta {
 
     @Override
     protected void sacar(double valor) {
-        if (this.getSaldo() >= valor) {
             this.saldo -= valor;
-            return;
-        }
-        JOptionPane.showMessageDialog(null, "Nao foi possível realizar o saque tente novamente mais tarde!");
     }
 
     @Override

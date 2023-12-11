@@ -9,7 +9,7 @@ public class Processamento {
 
     public void exe() {
 
-        String[] options = {"Cadastrar conta", "Excluir conta", "Sacar", "Depositar", "Solicitar empréstimo", "Pagar Emprestimo", "Visualizar Conta", "Sair"};
+        String[] options = {"Cadastrar conta", "Excluir conta", "Sacar", "Depositar", "Solicitar empréstimo", "Pagar Empréstimo", "Visualizar Conta", "Sair"};
         int escolha = JOptionPane.showOptionDialog(null, "Escolha oque deseja fazer.", "Menu", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, null);
 
         switch (escolha) {
@@ -37,7 +37,7 @@ public class Processamento {
                 processarEmprestimo();
                 exe();
                 break;
-            case 5://"Pagar Emprestimo"
+            case 5://"Pagar Empréstimo"
                 processarPagamentoEmprestimo();
                 exe();
                 break;
@@ -113,12 +113,10 @@ public class Processamento {
             String titular = JOptionPane.showInputDialog(null, "Titular:", "Visualizar Conta Por Titular", JOptionPane.PLAIN_MESSAGE);
             Conta contaEncontrada = buscarPorTitular(titular);
             saque(contaEncontrada);
-            print(contaEncontrada);
         } else {
             int numeroConta = Integer.parseInt(JOptionPane.showInputDialog(null, "Numero da Conta:", "Visualizar Conta Por Numero da Conta", JOptionPane.PLAIN_MESSAGE));
             Conta contaEncontrada = buscarPorNumeroConta(numeroConta);
             saque(contaEncontrada);
-            print(contaEncontrada);
         }
     }
 
@@ -129,28 +127,24 @@ public class Processamento {
             String titular = JOptionPane.showInputDialog(null, "Titular:", "Visualizar Conta Por Titular", JOptionPane.PLAIN_MESSAGE);
             Conta contaEncontrada = buscarPorTitular(titular);
             deposito(contaEncontrada);
-            print(contaEncontrada);
         } else {
             int numeroConta = Integer.parseInt(JOptionPane.showInputDialog(null, "Numero da Conta:", "Visualizar Conta Por Numero da Conta", JOptionPane.PLAIN_MESSAGE));
             Conta contaEncontrada = buscarPorNumeroConta(numeroConta);
             deposito(contaEncontrada);
-            print(contaEncontrada);
         }
     }
 
     protected void processarEmprestimo() {
         String[] tiposContaEm = {"Titular da conta", "Numero de conta"};
-        int escolha = JOptionPane.showOptionDialog(null, "Por favor, informe o tipo de busca que deseja fazer.", "Visualizar Conta", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, tiposContaEm, null);
+        int escolha = JOptionPane.showOptionDialog(null, "Por favor, informe o tipo de busca que deseja fazer.", "Empréstimo", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, tiposContaEm, null);
         if (escolha == 0) {
-            String titular = JOptionPane.showInputDialog(null, "Titular:", "Visualizar Conta Por Titular", JOptionPane.PLAIN_MESSAGE);
+            String titular = JOptionPane.showInputDialog(null, "Titular:", "Empréstimo Por Titular", JOptionPane.PLAIN_MESSAGE);
             Conta contaEncontrada = buscarPorTitular(titular);
             emprestimo(contaEncontrada);
-            print(contaEncontrada);
         } else {
-            int numeroConta = Integer.parseInt(JOptionPane.showInputDialog(null, "Numero da Conta:", "Visualizar Conta Por Numero da Conta", JOptionPane.PLAIN_MESSAGE));
+            int numeroConta = Integer.parseInt(JOptionPane.showInputDialog(null, "Numero da Conta:", "Empréstimo Por Numero da Conta", JOptionPane.PLAIN_MESSAGE));
             Conta contaEncontrada = buscarPorNumeroConta(numeroConta);
             emprestimo(contaEncontrada);
-            print(contaEncontrada);
         }
     }
 
@@ -161,6 +155,7 @@ public class Processamento {
             String titular = JOptionPane.showInputDialog(null, "Titular:", "Visualizar Conta Por Titular", JOptionPane.PLAIN_MESSAGE);
             Conta contaEncontrada = buscarPorTitular(titular);
             print(contaEncontrada);
+
         } else {
             int numeroConta = Integer.parseInt(JOptionPane.showInputDialog(null, "Titular:", "Visualizar Conta Por Numero da Conta", JOptionPane.PLAIN_MESSAGE));
             Conta contaEncontrada = buscarPorNumeroConta(numeroConta);
@@ -170,17 +165,17 @@ public class Processamento {
 
     protected void processarPagamentoEmprestimo() {
         String[] tiposContaEm = {"Titular da conta", "Numero de conta"};
-        int escolha = JOptionPane.showOptionDialog(null, "Por favor, informe o tipo de busca que deseja fazer.", "Visualizar Conta", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, tiposContaEm, null);
+        int escolha = JOptionPane.showOptionDialog(null, "Por favor, informe o tipo de busca que deseja fazer.", "Pagar Empréstimo", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, tiposContaEm, null);
         if (escolha == 0) {
-            String titular = JOptionPane.showInputDialog(null, "Titular:", "Visualizar Conta Por Titular", JOptionPane.PLAIN_MESSAGE);
+            String titular = JOptionPane.showInputDialog(null, "Titular:", "Pagar Empréstimo Por Titular", JOptionPane.PLAIN_MESSAGE);
             Conta contaEncontrada = buscarPorTitular(titular);
             pagarEmprestimo(contaEncontrada);
-            print(contaEncontrada);
+
+
         } else {
-            int numeroConta = Integer.parseInt(JOptionPane.showInputDialog(null, "Numero da Conta:", "Visualizar Conta Por Numero da Conta", JOptionPane.PLAIN_MESSAGE));
+            int numeroConta = Integer.parseInt(JOptionPane.showInputDialog(null, "Numero da Conta:", "Pagar Empréstimo Por Numero da Conta", JOptionPane.PLAIN_MESSAGE));
             Conta contaEncontrada = buscarPorNumeroConta(numeroConta);
             pagarEmprestimo(contaEncontrada);
-            print(contaEncontrada);
         }
     }
 
@@ -199,14 +194,13 @@ public class Processamento {
                 return conta;
             }
         }
-        JOptionPane.showMessageDialog(null, "Conta nao encotrada");
         return null;
     }
 
     protected void excluirConta(Conta conta) {
         if (conta == null) {
-            JOptionPane.showMessageDialog(null, "Conta não encontrada!");
-            return;
+            JOptionPane.showMessageDialog(null, "Conta não encontrada", "Erro", JOptionPane.ERROR_MESSAGE);
+            return; // Parar o método
         }
 
         if (conta.getSaldo() > 0) {
@@ -214,7 +208,7 @@ public class Processamento {
             return;
         }
 
-        if (conta.getEmprestimo() != 0) {
+        if (conta.getEmprestimo() != conta.getLimite()) {
             JOptionPane.showMessageDialog(null, "Conta possui empréstimo. Exclusão não permitida!");
             return;
         }
@@ -223,14 +217,18 @@ public class Processamento {
         JOptionPane.showMessageDialog(null, "Conta excluída com sucesso!");
     }
 
-    protected void print(Conta contaEncontrada) {
-        double saldo = contaEncontrada.getSaldo();
-        int numero = contaEncontrada.getNumeroConta();
-        String tipo = contaEncontrada.getTipo();
-        String nomeTitular = contaEncontrada.getTitular();
+    protected void print(Conta conta) {
+        if (conta == null) {
+            JOptionPane.showMessageDialog(null, "Conta não encontrada", "Erro", JOptionPane.ERROR_MESSAGE);
+            return; // Parar o método
+        }
+        double saldo = conta.getSaldo();
+        int numero = conta.getNumeroConta();
+        String tipo = conta.getTipo();
+        String nomeTitular = conta.getTitular();
         String emprestimo = "";
         if (Objects.equals(tipo, "PF") || Objects.equals(tipo, "PJ")) {
-            emprestimo = "\nSeu limite de empréstimo é de R$" + String.format("%.2f", contaEncontrada.getLimite()) + "\nSeu limite disponivel é de R$" + contaEncontrada.getEmprestimo();
+            emprestimo = "\nSeu limite de empréstimo é de R$" + String.format("%.2f", conta.getLimite()) + "\nSeu limite disponível é de R$" +  String.format("%.2f",conta.getEmprestimo());
 
         }
         JOptionPane.showMessageDialog(null, "Titular: " + nomeTitular + "\nTipo da conta: " + tipo + "\nSaldo atual: R$" + String.format("%.2f", saldo) + "\nNumero da conta : " + numero + emprestimo);
@@ -238,31 +236,51 @@ public class Processamento {
     }
 
     protected void saque(Conta conta) {
+        if (conta == null) {
+            JOptionPane.showMessageDialog(null, "Conta não encontrada", "Erro", JOptionPane.ERROR_MESSAGE);
+            return; // Parar o método
+        }
         if (conta.getSaldo() == 0) {
             JOptionPane.showMessageDialog(null, "Voce nao possui saldo insuficiente para realizar o saque!!");
             return;
         }
         double valorSaque = Double.parseDouble(JOptionPane.showInputDialog(null, "Valor:", "Saque", JOptionPane.PLAIN_MESSAGE));
         if (conta.getSaldo() < valorSaque) {
-            JOptionPane.showMessageDialog(null, "Voce nao possui saldo suficiente para realizar o saque!!");
+            JOptionPane.showMessageDialog(null, "Voce nao possui saldo suficiente para realizar o saque!!","Erro",JOptionPane.ERROR_MESSAGE);
             return;
         }
         conta.addSacar(valorSaque);
         JOptionPane.showMessageDialog(null, "Saque realizado com sucesso!");
+        print(conta);
     }
 
     protected void deposito(Conta conta) {
+        if (conta == null) {
+            JOptionPane.showMessageDialog(null, "Conta não encontrada", "Erro", JOptionPane.ERROR_MESSAGE);
+            return; // Parar o método
+        }
         double valorDeposito = Double.parseDouble(JOptionPane.showInputDialog(null, "Valor:", "Deposito", JOptionPane.PLAIN_MESSAGE));
         conta.addDeposito(valorDeposito);
         JOptionPane.showMessageDialog(null, "Deposito realizado com sucesso!");
+        print(conta);
     }
 
     protected void emprestimo(Conta conta) {
+        if (conta == null) {
+            JOptionPane.showMessageDialog(null, "Conta não encontrada", "Erro", JOptionPane.ERROR_MESSAGE);
+            return; // Parar o método
+        }
         double valorEmprestimo = Double.parseDouble(JOptionPane.showInputDialog(null, "Valor:", "Empréstimo", JOptionPane.PLAIN_MESSAGE));
         conta.addEmprestimo(valorEmprestimo);
+        print(conta);
     }
 
     protected void pagarEmprestimo(Conta conta) {
+        if (conta == null) {
+            JOptionPane.showMessageDialog(null, "Conta não encontrada", "Erro", JOptionPane.ERROR_MESSAGE);
+            return; // Parar o método
+        }
         conta.addpagarEmprestimo();
+        print(conta);
     }
 }
