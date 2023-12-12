@@ -95,24 +95,6 @@ public class Conta {
         pagarEmprestimo();
     }
 
-    protected int gerarNumeroConta() {
-        Random random = new Random();
-        StringBuilder numeroContaBuilder = new StringBuilder();
-        for (int i = 0; i < 4; i++) {
-            int digito = random.nextInt(10);
-            numeroContaBuilder.append(digito);
-        }
-        return Integer.parseInt(numeroContaBuilder.toString());
-    }
-
-    protected double validarValores(String texto) {
-        String input = JOptionPane.showInputDialog(texto);
-        if (isNumero(input)) {
-            return Double.parseDouble(input);
-        } else {
-            return 0;
-        }
-    }
 
     protected int validarValoresInt(String texto) {
         String input = JOptionPane.showInputDialog(texto);
