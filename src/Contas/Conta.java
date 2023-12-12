@@ -12,14 +12,14 @@ public class Conta {
     protected double total;
     protected double limite;
 
-    public Conta(String titular, String tipo) {
+    public Conta(String titular, String tipo,int numeroConta) {
         this.titular = titular;
         this.tipo = tipo;
         this.saldo = 0;
         this.emprestimo = 0;
         this.total = 0;
         this.limite = 0;
-        this.numeroConta = gerarNumeroConta();
+        this.numeroConta = numeroConta;
     }
 
     public Conta() {
@@ -29,7 +29,7 @@ public class Conta {
         this.emprestimo = 0;
         this.total = 0;
         this.limite = 0;
-        this.numeroConta = gerarNumeroConta();
+        this.numeroConta = 0;
     }
 
     protected String getTitular() {
@@ -141,12 +141,4 @@ public class Conta {
         }
     }
 
-    protected int validarValores() {
-        String input = JOptionPane.showInputDialog("Muito bem, agora me informe a quantidade que planeja comprar");
-        if (isNumeroInteiro(input)) {
-            return Integer.parseInt(input);
-        } else {
-            return 0;
-        }
-    }
 }

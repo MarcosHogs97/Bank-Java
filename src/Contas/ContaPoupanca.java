@@ -3,8 +3,8 @@ package Contas;
 import javax.swing.*;
 
 public class ContaPoupanca extends Conta {
-    public ContaPoupanca(String titular) {
-        super(titular, "Poupança");
+    public ContaPoupanca(String titular, int numeroConta) {
+        super(titular, "Poupança",numeroConta);
 
     }
 
@@ -18,7 +18,7 @@ public class ContaPoupanca extends Conta {
             this.saldo -= valor;
     }
 
-    @Override
+
     protected void emprestimo(double valor) {
         JOptionPane.showMessageDialog(null, "Infelizmente nao é possível realizar empréstimo em conta do tipo poupança");
     }

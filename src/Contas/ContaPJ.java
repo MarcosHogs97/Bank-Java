@@ -9,8 +9,8 @@ public class ContaPJ extends Conta {
     protected double valorParcelas;
     protected double total;
 
-    public ContaPJ(String titular) {
-        super(titular, "PJ");
+    public ContaPJ(String titular, int numeroConta) {
+        super(titular, "PJ",numeroConta);
         this.limite = 2500.00;
         this.saldoEmprestimo = this.limite;
     }
@@ -98,7 +98,7 @@ public class ContaPJ extends Conta {
             this.saldo -= valor;
     }
 
-    @Override
+
     protected void emprestimo(double valor) {
         if (getEmprestimo() < valor) {
             JOptionPane.showMessageDialog(null, "Voce nao possui limite suficiente para realizar o empréstimo!!\nLimite para empréstimo de R$" + String.format("%.2f", getEmprestimo()),"Erro",JOptionPane.ERROR_MESSAGE);

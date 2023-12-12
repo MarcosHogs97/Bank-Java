@@ -52,7 +52,7 @@ public class Processamento {
     }
 
     protected void cadastrarUsuario() {
-        int simOuNao = JOptionPane.showConfirmDialog(null, "Deseja realizar o primeiro depósito?", "Depósito", JOptionPane.YES_NO_OPTION);
+        int simOuNao = JOptionPane.showConfirmDialog(null, "Deseja realizar o cadastro?", "Cadastro", JOptionPane.YES_NO_OPTION);
         if (simOuNao == JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(null, "Vamos iniciar o processo de cadastro.");
             String[] tiposConta = {"Conta PF", "Conta PJ", "Conta Poupança"};
@@ -60,17 +60,23 @@ public class Processamento {
             if (escolhaConta == 0) {
                 JOptionPane.showMessageDialog(null, "Por favor, insira o nome do titular da conta PF.");
                 String titular = JOptionPane.showInputDialog(null, "Titular:", "Conta PF", JOptionPane.PLAIN_MESSAGE);
-                contas.add(new ContaPF(titular));
+                int numeroConta = validarValoresInt("Informe o numero da conta");
+                ContaPF conta = new ContaPF(titular, numeroConta);
+                contas.add(conta);
                 JOptionPane.showMessageDialog(null, "Conta PF cadastrada com sucesso!");
             } else if (escolhaConta == 1) {
                 JOptionPane.showMessageDialog(null, "Por favor, insira o nome do titular da conta PJ.");
                 String titular = JOptionPane.showInputDialog(null, "Titular:", "Conta PJ", JOptionPane.PLAIN_MESSAGE);
-                contas.add(new ContaPJ(titular));
+                int numeroConta = validarValoresInt("Informe o numero da conta");
+                ContaPJ conta = new ContaPJ(titular, numeroConta);
+                contas.add(conta);
                 JOptionPane.showMessageDialog(null, "Conta PJ cadastrada com sucesso!");
             } else if (escolhaConta == 2) {
                 JOptionPane.showMessageDialog(null, "Por favor, insira o nome do titular da conta Poupança.");
                 String titular = JOptionPane.showInputDialog(null, "Titular:", "Conta Poupança", JOptionPane.PLAIN_MESSAGE);
-                contas.add(new ContaPoupanca(titular));
+                int numeroConta = validarValoresInt("Informe o numero da conta");
+                ContaPoupanca conta = new ContaPoupanca(titular, numeroConta);
+                contas.add(conta);
                 JOptionPane.showMessageDialog(null, "Conta Poupança cadastrada com sucesso!");
             } else {
                 JOptionPane.showMessageDialog(null, "Opção inválida.");
@@ -78,7 +84,7 @@ public class Processamento {
             simOuNao = JOptionPane.showConfirmDialog(null, "Deseja realizar o primeiro depósito?", "Depósito", JOptionPane.YES_NO_OPTION);
             if (simOuNao == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(null, "Por favor, insira o valor do primeiro depósito.");
-                double valorDeposito = Double.parseDouble(JOptionPane.showInputDialog(null, "Valor:", "Depósito", JOptionPane.PLAIN_MESSAGE));
+                double valorDeposito = validarValoresDouble(JOptionPane.showInputDialog(null, "Valor:", "Depósito", JOptionPane.PLAIN_MESSAGE));
                 contas.get(contas.size() - 1).addDeposito(valorDeposito);
                 JOptionPane.showMessageDialog(null, "Depósito realizado com sucesso!");
             }
@@ -140,11 +146,11 @@ public class Processamento {
         if (escolha == 0) {
             String titular = JOptionPane.showInputDialog(null, "Titular:", "Empréstimo Por Titular", JOptionPane.PLAIN_MESSAGE);
             Conta contaEncontrada = buscarPorTitular(titular);
-            emprestimo(contaEncontrada);
+            emprestimoProce(contaEncontrada);
         } else {
             int numeroConta = Integer.parseInt(JOptionPane.showInputDialog(null, "Numero da Conta:", "Empréstimo Por Numero da Conta", JOptionPane.PLAIN_MESSAGE));
             Conta contaEncontrada = buscarPorNumeroConta(numeroConta);
-            emprestimo(contaEncontrada);
+            emprestimoProce(contaEncontrada);
         }
     }
 
@@ -228,7 +234,7 @@ public class Processamento {
         String nomeTitular = conta.getTitular();
         String emprestimo = "";
         if (Objects.equals(tipo, "PF") || Objects.equals(tipo, "PJ")) {
-            emprestimo = "\nSeu limite de empréstimo é de R$" + String.format("%.2f", conta.getLimite()) + "\nSeu limite disponível é de R$" +  String.format("%.2f",conta.getEmprestimo());
+            emprestimo = "\nSeu limite de empréstimo é de R$" + String.format("%.2f", conta.getLimite()) + "\nSeu limite disponível é de R$" + String.format("%.2f", conta.getEmprestimo());
 
         }
         JOptionPane.showMessageDialog(null, "Titular: " + nomeTitular + "\nTipo da conta: " + tipo + "\nSaldo atual: R$" + String.format("%.2f", saldo) + "\nNumero da conta : " + numero + emprestimo);
@@ -244,9 +250,10 @@ public class Processamento {
             JOptionPane.showMessageDialog(null, "Voce nao possui saldo insuficiente para realizar o saque!!");
             return;
         }
-        double valorSaque = Double.parseDouble(JOptionPane.showInputDialog(null, "Valor:", "Saque", JOptionPane.PLAIN_MESSAGE));
+
+        double valorSaque = validarValoresDouble(JOptionPane.showInputDialog(null, "Valor:", "Saque", JOptionPane.PLAIN_MESSAGE));
         if (conta.getSaldo() < valorSaque) {
-            JOptionPane.showMessageDialog(null, "Voce nao possui saldo suficiente para realizar o saque!!","Erro",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Voce nao possui saldo suficiente para realizar o saque!!", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
         conta.addSacar(valorSaque);
@@ -259,19 +266,20 @@ public class Processamento {
             JOptionPane.showMessageDialog(null, "Conta não encontrada", "Erro", JOptionPane.ERROR_MESSAGE);
             return; // Parar o método
         }
-        double valorDeposito = Double.parseDouble(JOptionPane.showInputDialog(null, "Valor:", "Deposito", JOptionPane.PLAIN_MESSAGE));
+        double valorDeposito = validarValoresDouble(JOptionPane.showInputDialog(null, "Valor:", "Deposito", JOptionPane.PLAIN_MESSAGE));
         conta.addDeposito(valorDeposito);
         JOptionPane.showMessageDialog(null, "Deposito realizado com sucesso!");
         print(conta);
     }
 
-    protected void emprestimo(Conta conta) {
+    protected void emprestimoProce(Conta conta) {
         if (conta == null) {
             JOptionPane.showMessageDialog(null, "Conta não encontrada", "Erro", JOptionPane.ERROR_MESSAGE);
             return; // Parar o método
         }
-        double valorEmprestimo = Double.parseDouble(JOptionPane.showInputDialog(null, "Valor:", "Empréstimo", JOptionPane.PLAIN_MESSAGE));
-        conta.addEmprestimo(valorEmprestimo);
+        double valorEmprestimo = validarValoresDouble(JOptionPane.showInputDialog(null, "Valor:", "Empréstimo", JOptionPane.PLAIN_MESSAGE));
+        //conta.emprestimo(valorEmprestimo);
+        conta.emprestimo(valorEmprestimo);
         print(conta);
     }
 
@@ -280,7 +288,45 @@ public class Processamento {
             JOptionPane.showMessageDialog(null, "Conta não encontrada", "Erro", JOptionPane.ERROR_MESSAGE);
             return; // Parar o método
         }
-        conta.addpagarEmprestimo();
+        conta.pagarEmprestimo();
         print(conta);
+    }
+
+    protected int validarValoresInt(String texto) {
+        String input = JOptionPane.showInputDialog(texto);
+        if (isNumeroInteiro(input)) {
+            input = input.replace(",", ".");
+            return Integer.parseInt(input);
+        } else {
+            return 0;
+        }
+    }
+
+    protected boolean isNumeroInteiro(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    protected double validarValoresDouble(String texto) {
+        String input = texto;
+        if (isNumeroDouble(input)) {
+            input = input.replace(",", ".");
+            return Double.parseDouble(input);
+        } else {
+            return 0;
+        }
+    }
+
+    protected boolean isNumeroDouble(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
